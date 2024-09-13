@@ -1,0 +1,15 @@
+/* base.css */
+
+/* Configurações gerais de estilo */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #1f1f2e;
+  color: #f4f7fd;
+  padding: 20px;
+}

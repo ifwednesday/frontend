@@ -1,0 +1,105 @@
+:root {
+  --primary-color: #0071e3;
+  --light-bg: rgba(43, 43, 68, 0.75);
+  --dark-bg: rgba(37, 37, 57, 0.85);
+  --blur-effect: 12px;
+  --border-radius: 12px;
+  --font-color: #f4f7fd;
+}
+
+/* Container principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  padding: 2rem;
+}
+
+/* Sidebar */
+.sidebar {
+  grid-column: span 3;
+  background: var(--dark-bg);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(var(--blur-effect));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  color: var(--font-color);
+}
+
+.sidebar h2, .sidebar p {
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: var(--font-color);
+  text-align: center;
+}
+
+/* Conteúdo principal com cartões */
+.main-content {
+  grid-column: span 9;
+}
+
+/* Cartões com efeito de transparência e desfoque */
+.card {
+  background: var(--light-bg);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+  color: var(--font-color);
+}
+
+/* Estilos para títulos */
+h2 {
+  font-size: 1.125rem;
+  margin-bottom: 10px;
+  color: var(--font-color);
+  font-weight: 700;
+}
+
+/* Ajuste nos ícones */
+.icon-preferences {
+  width: 1.5rem;
+  height: auto;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+/* Estilo para a logo */
+.logo-prefeitura {
+  display: block;
+  margin: 10px auto;
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Estilo para o horário */
+#current-time {
+  display: inline-block;
+  width: 150px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* Estilo para o corpo */
+body {
+  font-family: "Poppins", sans-serif;
+  background: url('https://www.ixpap.com/images/2023/09/MacOS-Sonoma-Wallpaper-8.jpg') no-repeat center center fixed;
+  background-size: cover;
+  backdrop-filter: blur(12px);
+  color: var(--font-color);
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Estilo para o rodapé */
+.developer-credit {
+  text-align: center;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 10px 0;
+  margin-top: 20px;
+}

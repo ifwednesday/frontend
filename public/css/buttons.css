@@ -1,0 +1,47 @@
+/* buttons.css */
+
+/* Botões com fundo translúcido */
+button {
+  background: rgba(0, 113, 227, 0.75); /* Fundo translúcido no estilo macOS */
+  color: white;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 1.5rem; /* Aumenta o espaçamento entre botões */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  backdrop-filter: blur(8px); /* Adiciona o desfoque */
+}
+
+/* Hover com efeito de profundidade */
+button:hover {
+  background-color: rgba(0, 113, 227, 0.85);
+  transform: translateY(-3px); /* Suave elevação no hover */
+}
+
+/* Foco acessível */
+button:focus {
+  outline: 3px solid rgba(0, 113, 227, 0.5); /* Destaca no foco */
+}
+
+#add-more-files-btn {
+  background-color: rgba(0, 113, 227, 0.75);
+  color: white;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#add-more-files-btn:hover {
+  background-color: rgba(0, 113, 227, 0.85);
+  transform: translateY(-3px);
+}

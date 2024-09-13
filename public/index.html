@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Viagem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/buttons.css">
+  <link rel="stylesheet" href="css/modals.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <img src="https://www.campinapolis.mt.gov.br/imgs/default/logo.png" alt="Logo Prefeitura" class="logo-prefeitura">
+      <h2>PREFEITURA MUNICIPAL DE CAMPINAPOLIS</h2>
+      <h2>SECRETARIA MUNICIPAL DE FINANÇAS</h2>
+      <p>RELATÓRIO DE VIAGEM NACIONAL ONLINE</p>
+      <p><strong>Telefone:</strong> (66) 3437-1992</p>
+      <p><strong>Horário:</strong> <span id="current-time"></span></p>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="https://www.campinapolis.mt.gov.br/publicacoes/publicacao/7307/" target="_blank"
+          title="Dispõe sobre a concessão e fixação de valores de diárias...">
+          <img src="https://cdn-icons-png.flaticon.com/512/2495/2495384.png" alt="Link para publicação"
+            style="width: 50px;">
+        </a>
+        <p style="font-size: 12px; color: #fff;">Ver detalhes da concessão de diárias</p>
+      </div>
+    </aside>
+
+    <section class="main-content">
+      <form id="travel-report-form">
+        <div class="card">
+          <h2>Identificação do Servidor</h2>
+          <div id="error-message" class="error-message" role="alert"></div>
+          <label for="nome">Nome: <span class="required">*</span></label>
+          <input type="text" id="nome" name="nome" required aria-required="true">
+
+          <label for="cargo">Cargo: <span class="required">*</span></label>
+          <input type="text" id="cargo" name="cargo" required aria-required="true">
+
+          <label for="matricula">Matrícula/Portaria: <span class="required">*</span></label>
+          <input type="text" id="matricula" name="matricula" required aria-required="true">
+
+          <label for="lotacao">Lotação/Exercício:</label>
+          <input type="text" id="lotacao" name="lotacao">
+        </div>
+
+        <div class="card">
+          <h2>Identificação do Afastamento</h2>
+          <label for="percurso">Percurso (Município Início/Município final): <span class="required">*</span></label>
+          <input type="text" id="percurso" name="percurso" required aria-required="true">
+
+          <label for="data_saida">Data de Saída: <span class="required">*</span></label>
+          <input type="date" id="data_saida" name="data_saida" required aria-required="true">
+
+          <label for="data_chegada">Data de Chegada: <span class="required">*</span></label>
+          <input type="date" id="data_chegada" name="data_chegada" required aria-required="true">
+        </div>
+
+        <div class="card">
+          <h2>Comprovantes</h2>
+
+          <!-- Botão de escolher arquivos -->
+          <label for="comprovantes" class="custom-file-upload" aria-labelledby="file-chosen">Escolher Arquivos</label>
+          <input type="file" id="comprovantes" name="comprovantes" multiple>
+          <span id="file-chosen">Nenhum arquivo selecionado</span>
+
+          <!-- Botão para adicionar mais arquivos -->
+          <button type="button" id="add-more-files-btn">Adicionar Mais Arquivos</button>
+
+          <!-- Lista para mostrar arquivos anexados -->
+          <ul id="file-list"></ul>
+
+          <button type="button" id="signature-btn">Assinatura</button>
+          <p id="signature-status" class="signature-not-signed">Documento não assinado</p>
+          <p>Ao assinar este documento, você concorda com os termos disponíveis no final da página.</p>
+        </div>
+
+        <div class="card">
+          <h2>Descrição Sucinta da Viagem</h2>
+          <label for="descricao_viagem">Objetivo da Reunião - Atividade: <span class="required">*</span></label>
+          <textarea id="descricao_viagem" name="descricao_viagem" required aria-required="true"></textarea>
+        </div>
+
+        <div class="card">
+          <h2>Detalhes</h2>
+          <label for="solicitacao">Número da Solicitação (Se disponível):</label>
+          <input type="text" id="solicitacao" name="solicitacao">
+
+          <label for="veiculo">Veículo (Se disponível):</label>
+          <input type="text" id="veiculo" name="veiculo">
+
+          <label for="placa">Placa (Se disponível):</label>
+          <input type="text" id="placa" name="placa">
+
+          <button type="button" id="submit-btn" disabled>Enviar Relatório</button>
+          <button type="button" id="view-reports-btn">Ver Envios</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <!-- Signature Modal -->
+  <div id="signature-modal" class="modal" role="dialog" aria-labelledby="Assinatura" aria-hidden="true">
+    <div class="modal-content">
+      <h3>Assinatura</h3>
+      <canvas id="signature-pad"></canvas>
+      <div class="modal-buttons">
+        <button id="clear-signature-btn">Limpar</button>
+        <button id="save-signature-btn">Salvar Assinatura</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmation-modal" class="modal" role="dialog" aria-live="polite" aria-hidden="true">
+    <div class="modal-content">
+      <p>Você confirma que o relatório está correto e sem erros? O envio de um novo relatório irá sobrescrever o
+        anterior.</p>
+      <div class="modal-buttons">
+        <button id="cancel-btn">Cancelar</button>
+        <button id="confirm-btn">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="success-message" class="success-modal" role="dialog" aria-live="assertive" aria-hidden="true">
+    <div class="modal-content">
+      <p id="confirmation-text"></p>
+      <button id="close-success-btn">Fechar</button>
+    </div>
+  </div>
+
+  <div id="terms-modal" class="modal" role="dialog" aria-labelledby="Termos de Uso" aria-hidden="true">
+    <div class="modal-content">
+      <h3>Termos de Uso</h3>
+      <div class="modal-body">
+        <p><strong>1. Aceitação dos Termos</strong></p>
+        <p>Ao utilizar o site "RELATÓRIO DE VIAGEM NACIONAL ONLINE", você concorda com os Termos de Uso aqui descritos.
+          Se
+          você não concorda com algum destes termos, por favor, não utilize o site.</p>
+
+        <p><strong>2. Uso do Site</strong></p>
+        <p>O site tem como objetivo facilitar o preenchimento e envio de relatórios de viagem para fins administrativos.
+          O
+          uso indevido do site, incluindo tentativas de manipular ou comprometer o sistema, é estritamente proibido.</p>
+
+        <p><strong>3. Dados Pessoais</strong></p>
+        <p>Ao utilizar o site, você poderá fornecer dados pessoais, como nome, cargo e matrícula. Estes dados são
+          utilizados exclusivamente para a geração e envio dos relatórios de viagem, conforme previsto na legislação
+          aplicável.</p>
+
+        <p><strong>4. Limitações de Responsabilidade</strong></p>
+        <p>O site é fornecido "como está" e não garante que o sistema estará disponível sem interrupções ou erros. A
+          Prefeitura Municipal de Campinápolis não se responsabiliza por quaisquer prejuízos ou perdas decorrentes do
+          uso
+          indevido do site ou por falhas técnicas.</p>
+
+        <p><strong>5. Veracidade das Informações Declaradas</strong></p>
+        <p>Ao utilizar este site, o usuário declara que todas as informações fornecidas, incluindo os dados pessoais e
+          as
+          informações sobre a viagem, são verdadeiras, corretas e completas. A falsificação de informações ou o
+          fornecimento de dados incorretos é proibido e pode resultar em penalidades administrativas e legais, conforme
+          as
+          leis vigentes.</p>
+
+        <p><strong>6. Assinatura e Responsabilidade</strong></p>
+        <p>Ao assinar o relatório de viagem, o usuário confirma que está de acordo com as informações prestadas e se
+          responsabiliza pela veracidade e exatidão dos dados. A assinatura tem valor legal e, portanto, é reconhecida
+          como prova do compromisso do usuário com as informações fornecidas.</p>
+
+        <p><strong>7. Isenção de Responsabilidade por Erros de Usuário</strong></p>
+        <p>A Prefeitura Municipal de Campinápolis e seus servidores não se responsabilizam por erros cometidos pelo
+          usuário durante o preenchimento do relatório, como a inserção de informações incorretas ou a falta de
+          documentos. O usuário é o único responsável por garantir a exatidão dos dados e documentos enviados.</p>
+
+        <p><strong>8. Isenção de Responsabilidade por Informações Falsas</strong></p>
+        <p>A Prefeitura Municipal de Campinápolis e seus servidores estão isentos de responsabilidade por quaisquer
+          informações falsas ou enganosas fornecidas pelo usuário. Quaisquer consequências decorrentes de informações
+          incorretas ou falsas serão de responsabilidade exclusiva do usuário.</p>
+
+        <p><strong>9. Privacidade e Proteção de Dados</strong></p>
+        <p>As informações coletadas pelo site são utilizadas exclusivamente para os fins administrativos relacionados ao
+          envio dos relatórios de viagem. Todos os dados fornecidos são tratados de acordo com a legislação brasileira
+          de
+          proteção de dados, incluindo a Lei Geral de Proteção de Dados (LGPD). A Prefeitura Municipal de Campinápolis
+          se
+          compromete a não compartilhar informações pessoais com terceiros sem o consentimento do usuário, exceto quando
+          exigido por lei.</p>
+
+        <p><strong>10. Modificações nos Termos de Uso</strong></p>
+        <p>A Prefeitura Municipal de Campinápolis se reserva o direito de alterar os Termos de Uso a qualquer momento.
+          As
+          alterações entram em vigor a partir do momento em que são publicadas no site.</p>
+
+        <p><strong>11. Lei Aplicável</strong></p>
+        <p>Os Termos de Uso são regidos pelas leis vigentes no Brasil. Quaisquer disputas relacionadas ao uso do site
+          serão resolvidas nos tribunais competentes do município de Campinápolis.</p>
+      </div>
+      <div class="modal-buttons">
+        <button id="close-terms-btn">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-reports-modal" class="modal" role="dialog" aria-live="polite" aria-hidden="true">
+    <div class="modal-content">
+      <h3>Informe o código do relatório</h3>
+      <input type="text" id="report-code-input" placeholder="Código do relatório">
+      <div class="modal-buttons">
+        <button id="close-view-reports-btn">Fechar</button>
+        <button id="submit-report-code-btn">Ver Relatório</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <footer class="developer-credit">
+    <span>Desenvolvido por João Gabriel C. | Carlos Eduardo | <a href="#" id="open-terms-btn">Termos de Uso</a></span>
+  </footer>
+</body>
+
+</html>
