@@ -1,5 +1,5 @@
 const express = require('express');
-const formidable = require('formidable'); // Substituí Multer por Formidable
+const formidable = require('formidable'); // Substituí Multer por Formidabl
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
